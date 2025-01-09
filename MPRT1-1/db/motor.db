@@ -1,0 +1,355 @@
+#EPICS Status
+record(bi, "DISCONNECTED") {
+    field(ONAM, "KNUHRT-MPRT102")
+    field(VAL, "1")
+}
+
+#Calc record for motor
+record(ao, "MPRT:LNG-SET") {
+    field(DESC, "Input distance in cm")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+record(calcout, "MPRT:LNG-POSITION:CALC") {
+    field(DESC, "Convert distance to motor steps")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:LNG-SET CPP")
+    field(CALC, "A*10/0.0144")
+    field(PREC, "0")
+    field(OUT, "MPRT:LNG-POSITION:LOWERW PP")
+}    
+
+record(ao, "MPRT:ROT-SET") {
+    field(DESC, "Input angle in degree")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:ROT-POSITION:CALC") {
+   field(DESC, "Convert angle to motor steps")
+   field(SCAN, "Passive")
+   field(INPA, "MPRT:ROT-SET CPP")
+   field(CALC, "A/0.006171")
+   field(PREC, "0")
+   field(OUT, "MPRT:ROT-POSITION:LOWERW PP")
+}
+
+#Calc step to cm
+record(ao, "MPRT:LNG-POSITION:CM-OUT") {
+    field(DESC, "Motor position in cm")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:LNG-POSITION:CM-COMBINED") {
+    field(DESC, "Calculate motor position in cm directly")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:LNG-POSITION:LOWERR CPP")
+    field(INPB, "MPRT:LNG-POSITION:UPPERR CPP")
+    field(CALC, "(B*65536+A>=2147483648?B*65536+A-4294967296:B*65536+A)*0.0014137")
+    field(PREC, "1")
+    field(OUT, "MPRT:LNG-POSITION:CM-OUT PP")
+}
+ 
+#Calc step to Deg
+record(ao, "MPRT:ROT-POSITION:DEG-OUT") {
+    field(DESC, "Motor position in degrees")
+    field(PREC, "1")  
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:ROT-POSITION:DEG-COMBINED") {
+    field(DESC, "Calculate motor position in deg directly")
+    field(SCAN, "Passive")  
+    field(INPA, "MPRT:ROT-POSITION:LOWERR CPP")  
+    field(INPB, "MPRT:ROT-POSITION:UPPERR CPP")  
+    field(CALC, "((B*65536+A)>=2147483648?(B*65536+A-4294967296):(B*65536+A))*(360.0/57532.0)")
+    field(PREC, "1")  
+    field(OUT, "MPRT:ROT-POSITION:DEG-OUT PP")  
+}
+
+
+#Calc UI signal
+record(ao, "MPRT:MOTOR-READY") {
+    field(DESC, "LNG, ROT READY")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:MOTOR-READY:AND") {
+    field(DESC, "LNG READY AND ROT READY")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:LNG-FIXIO:READY CPP")
+    field(INPB, "MPRT:ROT-FIXIO:READY CPP")
+    field(CALC, "A&&B")
+    field(PREC, "0")
+    field(OUT, "MPRT:MOTOR-READY PP")
+}
+
+record(ao, "MPRT:MOTOR-Processing") {
+    field(DESC, "LNG, ROT Processing")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:MOTOR-Processing:AND") {
+    field(DESC, "LNG Proc AND ROT Proc")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:LNG-FIXIO:MOVE CPP")
+    field(INPB, "MPRT:ROT-FIXIO:MOVE CPP")
+    field(CALC, "A||B")
+    field(PREC, "0")
+    field(OUT, "MPRT:MOTOR-Processing PP")
+}
+
+record(ao, "MPRT:MOTOR-Error") {
+    field(DESC, "LNG, ROT Error")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:MOTOR-Error:AND") {
+    field(DESC, "LNG Error AND ROT Error")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:LNG-FIXIO:ALMA CPP")
+    field(INPB, "MPRT:ROT-FIXIO:ALMA CPP")
+    field(CALC, "A||B")
+    field(PREC, "0")
+    field(OUT, "MPRT:MOTOR-Error PP")
+}
+
+#CouchSetting
+record(ao, "MPRT:Couchtop-MPRT:SET") {
+    field(DESC, "Couch Top to MPRT Setting")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(ao, "MPRT:Couchtop-Isocenter:SET") {
+    field(DESC, "Couch Top to isocenter Setting")
+    field(PREC, "1")
+    field(VAL, "68")
+}
+
+#CouchState
+record(ao, "MPRT:LNG-Couchstate") {
+    field(DESC, "Couch State Long")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(ao, "MPRT:ROT-Couchstate") {
+    field(DESC, "Couch State Rotation")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+#CouchBottom to limit sensor 
+
+record(ao, "MPRT:Bottom-Limit:LNG") {
+    field(DESC, "Couch Bottom to limit Sensor")
+    field(PREC, "1")
+    field(VAL, "44.0")
+}
+
+#Calc isocenter
+record(ai, "MPRT:Isocenter") {
+    field(DESC, "isocenter")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:Isocneter:Calc") {
+    field(DESC, "isocneter Calc")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:Couchtop-MPRT:SET CPP")
+    field(INPB, "MPRT:Couchtop-Isocenter:SET CPP")
+    field(INPC, "MPRT:LNG-Couchstate CPP")
+    field(INPD, "MPRT:Bottom-Limit:LNG CPP")
+    field(CALC, "B+167.9-A-C-D")
+    field(PREC, "1")
+    field(OUT, "MPRT:Isocenter PP")
+}
+
+#Magnet Setting(isocenter-based) Lng and Rot
+record(ao, "MPRT:Isocenter-LNG") { 
+
+    field(PREC, "1")    field(DESC, "isocenter Based Lng")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(ao, "MPRT:Isocenter-ROT") {
+    field(DESC, "isocenter Based ROT")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+#Magnet State Isocenter LNG Based Target
+record(ao, "MPRT:LNG-Isocenter:Target") { 
+    field(DESC, "MPRT:LNG-Isocenter:Target")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+#Magnet State LNG Absoulte Target
+record(ao, "MPRT:LNG-Absolute:Target") {
+    field(DESC, "MPRT:LNG-Absolute:Target")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+#Magnet State LNG Isocenter-Based Actual 
+record(ao, "MPRT:LNG-Isocenterbased:Actual") {
+    field(DESC, "isocenterbased:Actual")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:LNG-Isocenterbased:Actual:Calc") {
+    field(DESC, "isocenterbased:Actual Calc")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:Isocenter CPP")
+    field(INPB, "MPRT:LNG-POSITION:CM-OUT CPP")
+    field(CALC, "B-A")
+    field(PREC, "1")
+    field(OUT, "MPRT:LNG-Isocenterbased:Actual PP")
+}
+
+#Magnet State ROT Isocenter-Based Actual 
+record(ao, "MPRT:ROT-Isocenterbased:Actual") {
+    field(DESC, "isocenterbased:Actual")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+record(calcout, "MPRT:ROT-Isocenterbased:Actual:Calc") {
+    field(DESC, "isocenterbased:Actual Calc")
+    field(SCAN, "Passive")
+    field(INPA, "MPRT:ROT-Couchstate CPP")
+    field(INPB, "MPRT:ROT-POSITION:DEG-OUT CPP")
+    field(CALC, "A+B")
+    field(PREC, "1")
+    field(OUT, "MPRT:ROT-Isocenterbased:Actual PP")
+}
+
+#Magnet State Isocenter LNG Based Target
+record(ao, "MPRT:ROT-Isocenter:Target") {
+    field(DESC, "MPRT:ROT-Isocenter:Target")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+#Magnet State LNG Absoulte Target
+record(ao, "MPRT:ROT-Absolute:Target") {
+    field(DESC, "MPRT:ROT-Isocenter:Target")
+    field(PREC, "1")
+    field(VAL, "0")
+}
+
+#Magnet Setting(isocenter-based) Top and Base
+record(bo, "MPRT:Isocenter-LNG:Base") {
+    field(DESC, "MPRT:Isocenter-LNG:Base")
+    field(ZNAM, "0")
+    field(ONAM, "1")
+    field(HIGH, "1")
+}
+
+record(calcout, "MPRT:Isocenter-LNG:Base:CALC") {
+    field(DESC, "MPRT:Isocenter-LNG:Base Calc")
+    field(INPA, "MPRT:Isocenter-LNG:Base CPP")  
+    field(INPB, "MPRT:Isocenter CPP")
+    field(INPC, "MPRT:Isocenter-LNG CPP")  
+    field(CALC, "(A=1)?-B:C")  
+    field(PREC, "1")
+    field(OUT, "MPRT:Isocenter-LNG PP")  
+}
+
+record(bo, "MPRT:Isocenter-LNG:Top") {
+    field(DESC, "MPRT:Isocenter-LNG:Top")
+    field(ZNAM, "0")
+    field(ONAM, "1")
+    field(HIGH, "1")
+}
+
+record(calcout, "MPRT:Isocenter-LNG:Top:CALC") {
+    field(DESC, "MPRT:Isocenter-LNG:Top Calc")
+    field(INPA, "MPRT:Isocenter-LNG:Top CPP")
+    field(INPB, "MPRT:Isocenter CPP")
+    field(INPC, "MPRT:Isocenter-LNG CPP")  
+    field(CALC, "(A=1)?(110-B):C")  
+    field(PREC, "1")
+    field(OUT, "MPRT:Isocenter-LNG PP")  
+}
+
+#Magnet Setting(isocenter-based) Apply
+record(bo, "MPRT:Isocenter:Apply") {
+    field(DESC, "MPRT:Isocenter:Apply")
+    field(ZNAM, "0")
+    field(ONAM, "1")
+    field(HIGH, "1")
+    field(FLNK, "MPRT:Isocenter:Apply:CALC1")
+}
+
+record(calcout, "MPRT:Isocenter:Apply:CALC1") {
+    field(DESC, "MPRT:Isocenter:Apply Calc1")
+    field(INPA, "MPRT:Isocenter-LNG")
+    field(CALC, "A")
+    field(PREC, "1")
+    field(OUT, "MPRT:LNG-Isocenter:Target PP")
+    field(FLNK, "MPRT:Isocenter:Apply:CALC2")
+}
+
+record(calcout, "MPRT:Isocenter:Apply:CALC2") {
+    field(DESC, "MPRT:Isocenter:Apply Calc2")
+    field(INPA, "MPRT:Isocenter")
+    field(INPB, "MPRT:Isocenter-LNG")
+    field(CALC, "(A+B)")
+    field(PREC, "1")
+    field(OUT, "MPRT:LNG-Absolute:Target PP")
+    field(FLNK, "MPRT:Isocenter:Apply:CALC3")
+}
+
+record(calcout, "MPRT:Isocenter:Apply:CALC3") {
+    field(DESC, "MPRT:Isocenter:Apply Calc3")
+    field(INPA, "MPRT:Isocenter-ROT")
+    field(CALC, "A")
+    field(PREC, "1")
+    field(OUT, "MPRT:ROT-Isocenter:Target PP")
+    field(FLNK, "MPRT:Isocenter:Apply:CALC4")
+}
+
+record(calcout, "MPRT:Isocenter:Apply:CALC4") {
+    field(DESC, "MPRT:Isocenter:Apply Calc4")
+    field(INPA, "MPRT:ROT-Couchstate")
+    field(INPB, "MPRT:Isocenter-ROT")
+    field(CALC, "(B-A)")
+    field(PREC, "1")
+    field(OUT, "MPRT:ROT-Absolute:Target PP")
+}
+
+#Magnet State Move
+record(bo, "MPRT:Magnet:Move") {
+    field(DESC, "MPRT:Magnet:Move")
+    field(ZNAM, "0")
+    field(ONAM, "1")
+    field(HIGH, "1")
+    field(FLNK, "MPRT:Magnet:Move:CALC1")
+}
+
+record(calcout, "MPRT:Magnet:Move:CALC1") {
+    field(DESC, "MPRT:Magnet:Move LNG Trigger")
+    field(INPA, "MPRT:LNG-Absolute:Target")
+    field(CALC, "A")
+    field(PREC, "1")
+    field(OUT, "MPRT:LNG-SET PP")
+    field(FLNK, "MPRT:Magnet:Move:CALC2")
+}
+
+record(calcout, "MPRT:Magnet:Move:CALC2") {
+    field(DESC, "MPRT:Magnet:Move ROT Trigger")
+    field(INPA, "MPRT:ROT-Absolute:Target")
+    field(CALC, "A")
+    field(PREC, "1")
+    field(OUT, "MPRT:ROT-SET PP")
+}

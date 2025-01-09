@@ -1,0 +1,202 @@
+# AZ Motor Driver substitution
+# Author : Seung-hee Nam
+# email : namsh@radexel.com
+# Data : Thursday, December 26 15:46 KST 2024
+#
+# Do not modify and distribute without permission of the author.
+# Please contact me if you have any questions.
+#
+# - 1.1 : Thursday, December 26 16:20 KST 2024
+#           - Modify code for rotation driver (adding Wonjun Kim)
+
+#-------------------------------------------#
+# Long motor driver substitution            #
+#-------------------------------------------#
+
+file db/ai_float.template { pattern
+{P,             R,			PORT,			OFFSET,         DATA_TYPE,      PREC,   SCAN}
+{MPRT:LNG-,     TIMEOUT:READ,           MPRT_LNG_RTIMEOUT,      0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     REMOTEIO:READ,		MPRT_LNG_RREMOTE,       0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     OPERATION:NUM,          MPRT_LNG_RNUM,          0,              INT32_LE,       0,	"I/O Intr"}
+{MPRT:LNG-,     FIXIO:READ,	        MPRT_LNG_RFIXIO,        0,              INT32_LE,       0,	"I/O Intr"}
+{MPRT:LNG-,     ALARM,		        MPRT_LNG_ALARM,         0,              INT32_LE,       0,	"I/O Intr"}
+{MPRT:LNG-,     POSITION:LOWERR,        MPRT_LNG_RLPOSITION,    0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     POSITION:UPPERR,        MPRT_LNG_RUPOSITION,    0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     SPEED:LOWERR,           MPRT_LNG_RLSPEED,       0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     SPEED:UPPERR,           MPRT_LNG_RUSPEED,       0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     CMDP:LOWERR,		MPRT_LNG_RLCMDP,        0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     CMDP:UPPERR,		MPRT_LNG_RUCMDP,        0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     TORQUE:READ,	        MPRT_LNG_RTORQUE,       0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     CST:CURRENT,	        MPRT_LNG_CSTCURRENT,    0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     INFO:LOWERR,		MPRT_LNG_LINFO,		0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     INFO:UPPERR,		MPRT_LNG_UINFO,		0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     RESERVE:READ,           MPRT_LNG_RRESERVE,      0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     PARMID:READ,            MPRT_LNG_RPARMID,	0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     RW:STATUS,	        MPRT_LNG_RWSTATUS,      0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     PARMID:WRITE,           MPRT_LNG_WPARMID,       0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     READDATA:LOWER,         MPRT_LNG_RLDATA,        0,              INT32_LE,	0,	"I/O Intr"}
+{MPRT:LNG-,     READDATA:UPPER,         MPRT_LNG_RUDATA,        0,              INT32_LE,	0,	"I/O Intr"}
+}
+
+file db/ao_float.template { pattern
+{P,		R,			PORT,			OFFSET,         DATA_TYPE,      PREC}    
+{MPRT:LNG-,	TIMEOUT:WRITE,		MPRT_LNG_WTIMEOUT,	0,              INT32_LE,       0}         
+{MPRT:LNG-,	REMOTEIO:WRITE,		MPRT_LNG_WREMOTE,       0,              INT32_LE,       0}
+{MPRT:LNG-,	OPERATION:NUMW,		MPRT_LNG_WNUM,		0,              INT32_LE,       0}
+{MPRT:LNG-,	FIXIO:WRITE,		MPRT_LNG_WFIXIO,        0,              INT32_LE,       0}
+{MPRT:LNG-,	OPERATION:MODE,		MPRT_LNG_WMODE,         0,              INT32_LE,       0}
+{MPRT:LNG-,	POSITION:LOWERW,	MPRT_LNG_WLPOSITION,    0,              INT32_LE,       0}
+{MPRT:LNG-,     POSITION:UPPERW,	MPRT_LNG_WUPOSITION,    0,              INT32_LE,       0}
+{MPRT:LNG-,     SPEED:LOWERW,		MPRT_LNG_WLSPEED,       0,              INT32_LE,       0}
+{MPRT:LNG-,     SPEED:UPPERW,		MPRT_LNG_WUSPEED,       0,              INT32_LE,       0}
+{MPRT:LNG-,     STARTRATE:LOWERW,	MPRT_LNG_WLRATE,        0,              INT32_LE,       0}
+{MPRT:LNG-,     STARTRATE:UPPERW,	MPRT_LNG_WURATE,        0,              INT32_LE,       0}
+{MPRT:LNG-,     STOPRATE:LOWERW,	MPRT_LNG_WLSRATE,       0,              INT32_LE,       0}
+{MPRT:LNG-,     STOPRATE:UPPERW,	MPRT_LNG_WUSRATE,       0,              INT32_LE,       0}
+{MPRT:LNG-,     CURRENT:WRITE,		MPRT_LNG_WCURRENT,      0,              INT32_LE,       0}
+{MPRT:LNG-,     FORWARD:DESTINATION,	MPRT_LNG_WFDESTINATION, 0,              INT32_LE,       0}
+{MPRT:LNG-,     RESERVE:WRITE,		MPRT_LNG_WRESERVE,      0,              INT32_LE,       0}
+{MPRT:LNG-,     PARMID:READW,		MPRT_LNG_WRPARMID,	0,              INT32_LE,       0}
+{MPRT:LNG-,     WRITE:REQUEST,		MPRT_LNG_WREQUEST,      0,              INT32_LE,       0}
+{MPRT:LNG-,     PARMID:WRITEW,		MPRT_LNG_WWPARMID,	0,              INT32_LE,       0}
+{MPRT:LNG-,     WRITEDATA:LOWER,	MPRT_LNG_WLDATA,	0,              INT32_LE,       0}
+{MPRT:LNG-,     WRITEDATA:UPPER,	MPRT_LNG_WUDATA,	0,              INT32_LE,       0}
+}
+
+file db/bo_word.template { pattern
+{P,             R,			PORT,               OFFSET,   MASK,      ZNAM,   ONAM,   HIGH}
+{MPRT:LNG-,     FIXIO:FWJOG,		MPRT_LNG_WFIXIO,    0,        0x0001,    Low,    High   0   }
+{MPRT:LNG-,     FIXIO:RVJOG,		MPRT_LNG_WFIXIO,    0,        0x0002,    Low,    High   0   }
+{MPRT:LNG-,     FIXIO:RESERVE,		MPRT_LNG_WFIXIO,    0,        0x0004,    Low,    High   0   }
+{MPRT:LNG-,     FIXIO:START,		MPRT_LNG_WFIXIO,    0,        0x0008,    Low,    High   0   }
+{MPRT:LNG-,     FIXIO:ZHOME,		MPRT_LNG_WFIXIO,    0,        0x0010,    Low,    High   1   }
+{MPRT:LNG-,     FIXIO:STOP,		MPRT_LNG_WFIXIO,    0,        0x0020,    Low,    High   1   }
+{MPRT:LNG-,     FIXIO:FREE,		MPRT_LNG_WFIXIO,    0,        0x0040,    Low,    High   0   }
+{MPRT:LNG-,     FIXIO:ALMRST,		MPRT_LNG_WFIXIO,    0,        0x0080,    Low,    High   1   }
+{MPRT:LNG-,     FIXIO:TRIG,		MPRT_LNG_WFIXIO,    0,        0x0100,    Low,    High   0   } 
+{MPRT:LNG-,     FIXIO:TRIGMODE,		MPRT_LNG_WFIXIO,    0,        0x0200,    Low,    High   0   }
+}
+
+file db/bi_word.template { pattern
+{P,             R,              PORT,                   OFFSET, MASK,   ZNAM,   ONAM,   ZSV,            OSV,    SCAN}
+{MPRT:LNG-,	FIXIO:SEQBSY,	MPRT_LNG_RFIXIO,	0,	0x0001,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:MOVE,	MPRT_LNG_RFIXIO,	0,	0x0002,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:INPOS,	MPRT_LNG_RFIXIO,	0,	0x0004,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:STARTR,	MPRT_LNG_RFIXIO,	0,	0x0008,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:HOMEEND,	MPRT_LNG_RFIXIO,	0,	0x0010,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:READY,	MPRT_LNG_RFIXIO,	0,	0x0020,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:DCMDRDY,	MPRT_LNG_RFIXIO,	0,	0x0040,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:ALMA,	MPRT_LNG_RFIXIO,	0,	0x0080,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:TRIGR,	MPRT_LNG_RFIXIO,	0,	0x0100,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:TRIGMODER,MPRT_LNG_RFIXIO,	0,	0x0200,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:SETERR,	MPRT_LNG_RFIXIO,	0,	0x0400,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:EXEERR,	MPRT_LNG_RFIXIO,	0,	0x0800,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:DCMDFULL,	MPRT_LNG_RFIXIO,	0,	0x1000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:STOPR,	MPRT_LNG_RFIXIO,	0,	0x2000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:RESERVER,	MPRT_LNG_RFIXIO,	0,	0x4000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	FIXIO:TLC,	MPRT_LNG_RFIXIO,	0,	0x8000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:RDERR,	MPRT_LNG_RWSTATUS,	0,	0x0080,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:WREND,	MPRT_LNG_RWSTATUS,	0,	0x0100,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:SYSBSY,	MPRT_LNG_RWSTATUS,	0,	0x0200,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:WRSETERR,MPRT_LNG_RWSTATUS,	0,	0x0800,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:WRIFERR,	MPRT_LNG_RWSTATUS,	0,	0x1000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:WRNVERR,	MPRT_LNG_RWSTATUS,	0,	0x2000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:WREXEERR,MPRT_LNG_RWSTATUS,	0,	0x4000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:LNG-,	STATUS:WRERR,	MPRT_LNG_RWSTATUS,	0,	0x8000,	OFF,	ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+}
+
+#-------------------------------------------#
+# Rotation motor driver substitution        #
+#-------------------------------------------#
+
+file db/ai_float.template { pattern
+{P,             R,                      PORT,                   OFFSET,         DATA_TYPE,      PREC,   SCAN}
+{MPRT:ROT-,     TIMEOUT:READ,           MPRT_ROT_RTIMEOUT,      0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     REMOTEIO:READ,          MPRT_ROT_RREMOTE,       0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     OPERATION:NUM,          MPRT_ROT_RNUM,          0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     FIXIO:READ,             MPRT_ROT_RFIXIO,        0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     ALARM,                  MPRT_ROT_ALARM,         0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     POSITION:LOWERR,        MPRT_ROT_RLPOSITION,    0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     POSITION:UPPERR,        MPRT_ROT_RUPOSITION,    0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     SPEED:LOWERR,           MPRT_ROT_RLSPEED,       0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     SPEED:UPPERR,           MPRT_ROT_RUSPEED,       0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     CMDP:LOWERR,            MPRT_ROT_RLCMDP,        0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     CMDP:UPPERR,            MPRT_ROT_RUCMDP,        0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     TORQUE:READ,            MPRT_ROT_RTORQUE,       0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     CST:CURRENT,            MPRT_ROT_CSTCURRENT,    0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     INFO:LOWERR,            MPRT_ROT_LINFO,         0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     INFO:UPPERR,            MPRT_ROT_UINFO,         0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     RESERVE:READ,           MPRT_ROT_RRESERVE,      0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     PARMID:READ,            MPRT_ROT_RPARMID,       0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     RW:STATUS,              MPRT_ROT_RWSTATUS,      0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     PARMID:WRITE,           MPRT_ROT_WPARMID,       0,              INT32_LE,       0,      "I/O Intr"}
+{MPRT:ROT-,     READDATA:LOWER,        MPRT_ROT_RLDATA,        0,              INT32_LE,        0,      "I/O Intr"}
+{MPRT:ROT-,     READDATA:UPPER,        MPRT_ROT_RUDATA,        0,              INT32_LE,        0,      "I/O Intr"}
+}
+
+file db/ao_float.template { pattern
+{P,             R,                      PORT,                   OFFSET,         DATA_TYPE,      PREC}
+{MPRT:ROT-,     TIMEOUT:WRITE,          MPRT_ROT_WTIMEOUT,      0,              INT32_LE,       0}
+{MPRT:ROT-,     REMOTEIO:WRITE,         MPRT_ROT_WREMOTE,       0,              INT32_LE,       0}
+{MPRT:ROT-,     OPERATION:NUMW,         MPRT_ROT_WNUM,          0,              INT32_LE,       0}
+{MPRT:ROT-,     FIXIO:WRITE,            MPRT_ROT_WFIXIO,        0,              INT32_LE,       0}
+{MPRT:ROT-,     OPERATION:MODE,         MPRT_ROT_WMODE,         0,              INT32_LE,       0}
+{MPRT:ROT-,     POSITION:LOWERW,        MPRT_ROT_WLPOSITION,    0,              INT32_LE,       0}
+{MPRT:ROT-,     POSITION:UPPERW,        MPRT_ROT_WUPOSITION,    0,              INT32_LE,       0}
+{MPRT:ROT-,     SPEED:LOWERW,           MPRT_ROT_WLSPEED,       0,              INT32_LE,       0}
+{MPRT:ROT-,     SPEED:UPPERW,           MPRT_ROT_WUSPEED,       0,              INT32_LE,       0}
+{MPRT:ROT-,     STARTRATE:LOWERW,       MPRT_ROT_WLRATE,        0,              INT32_LE,       0}
+{MPRT:ROT-,     STARTRATE:UPPERW,       MPRT_ROT_WURATE,        0,              INT32_LE,       0}
+{MPRT:ROT-,     STOPRATE:LOWERW,        MPRT_ROT_WLSRATE,       0,              INT32_LE,       0}
+{MPRT:ROT-,     STOPRATE:UPPERW,        MPRT_ROT_WUSRATE,       0,              INT32_LE,       0}
+{MPRT:ROT-,     CURRENT:WRITE,          MPRT_ROT_WCURRENT,      0,              INT32_LE,       0}
+{MPRT:ROT-,     FORWARD:DESTINATION,    MPRT_ROT_WFDESTINATION, 0,              INT32_LE,       0}
+{MPRT:ROT-,     RESERVE:WRITE,          MPRT_ROT_WRESERVE,      0,              INT32_LE,       0}
+{MPRT:ROT-,     PARMID:READW,           MPRT_ROT_WRPARMID,      0,              INT32_LE,       0}
+{MPRT:ROT-,     WRITE:REQUEST,          MPRT_ROT_WREQUEST,      0,              INT32_LE,       0}
+{MPRT:ROT-,     PARMID:WRITEW,          MPRT_ROT_WWPARMID,      0,              INT32_LE,       0}
+{MPRT:ROT-,     WRITEDATA:LOWER,        MPRT_ROT_WLDATA,        0,              INT32_LE,       0}
+{MPRT:ROT-,     WRITEDATA:UPPER,        MPRT_ROT_WUDATA,        0,              INT32_LE,       0}
+}
+
+file db/bo_word.template { pattern
+{P,             R,                      PORT,               OFFSET,   MASK,      ZNAM,   ONAM   HIGH}
+{MPRT:ROT-,     FIXIO:FWJOG,            MPRT_ROT_WFIXIO,    0,        0x0001,    Low,    High   0   }
+{MPRT:ROT-,     FIXIO:RVJOG,            MPRT_ROT_WFIXIO,    0,        0x0002,    Low,    High   0   }
+{MPRT:ROT-,     FIXIO:RESERVE,          MPRT_ROT_WFIXIO,    0,        0x0004,    Low,    High   0   }
+{MPRT:ROT-,     FIXIO:START,            MPRT_ROT_WFIXIO,    0,        0x0008,    Low,    High   0   }
+{MPRT:ROT-,     FIXIO:ZHOME,            MPRT_ROT_WFIXIO,    0,        0x0010,    Low,    High   1   }
+{MPRT:ROT-,     FIXIO:STOP,             MPRT_ROT_WFIXIO,    0,        0x0020,    Low,    High   1   }
+{MPRT:ROT-,     FIXIO:FREE,             MPRT_ROT_WFIXIO,    0,        0x0040,    Low,    High   0   }
+{MPRT:ROT-,     FIXIO:ALMRST,           MPRT_ROT_WFIXIO,    0,        0x0080,    Low,    High   1   }
+{MPRT:ROT-,     FIXIO:TRIG,             MPRT_ROT_WFIXIO,    0,        0x0100,    Low,    High   0   }
+{MPRT:ROT-,     FIXIO:TRIGMODE,         MPRT_ROT_WFIXIO,    0,        0x0200,    Low,    High   0   }
+}
+
+file db/bi_word.template { pattern
+{P,             R,              PORT,                   OFFSET, MASK,   ZNAM,   ONAM,   ZSV,            OSV,    SCAN}
+{MPRT:ROT-,     FIXIO:SEQBSY,   MPRT_ROT_RFIXIO,        0,      0x0001, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:MOVE,     MPRT_ROT_RFIXIO,        0,      0x0002, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:INPOS,    MPRT_ROT_RFIXIO,        0,      0x0004, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:STARTR,   MPRT_ROT_RFIXIO,        0,      0x0008, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:HOMEEND,  MPRT_ROT_RFIXIO,        0,      0x0010, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:READY,    MPRT_ROT_RFIXIO,        0,      0x0020, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:DCMDRDY,  MPRT_ROT_RFIXIO,        0,      0x0040, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:ALMA,     MPRT_ROT_RFIXIO,        0,      0x0080, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:TRIGR,    MPRT_ROT_RFIXIO,        0,      0x0100, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:TRIGMODER,MPRT_ROT_RFIXIO,        0,      0x0200, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:SETERR,   MPRT_ROT_RFIXIO,        0,      0x0400, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:EXEERR,   MPRT_ROT_RFIXIO,        0,      0x0800, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:DCMDFULL, MPRT_ROT_RFIXIO,        0,      0x1000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:STOPR,    MPRT_ROT_RFIXIO,        0,      0x2000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:RESERVER, MPRT_ROT_RFIXIO,        0,      0x4000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     FIXIO:TLC,      MPRT_ROT_RFIXIO,        0,      0x8000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:RDERR,   MPRT_ROT_RWSTATUS,      0,      0x0080, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:WREND,   MPRT_ROT_RWSTATUS,      0,      0x0100, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:SYSBSY,  MPRT_ROT_RWSTATUS,      0,      0x0200, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:WRSETERR,MPRT_ROT_RWSTATUS,      0,      0x0800, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:WRIFERR, MPRT_ROT_RWSTATUS,      0,      0x1000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:WRNVERR, MPRT_ROT_RWSTATUS,      0,      0x2000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:WREXEERR,MPRT_ROT_RWSTATUS,      0,      0x4000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+{MPRT:ROT-,     STATUS:WRERR,   MPRT_ROT_RWSTATUS,      0,      0x8000, OFF,    ON,     NO_ALARM,       MAJOR,  "I/O Intr"}
+}
