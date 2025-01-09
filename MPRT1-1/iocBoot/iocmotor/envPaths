@@ -1,0 +1,8 @@
+epicsEnvSet("IOC","iocmotor")
+epicsEnvSet("TOP","/usr/local/epics/EPICS7/RADEXEL-DEV/EPICS-DEV/MPRT1-1")
+epicsEnvSet("SUPPORT","/usr/local/epics/EPICS7/modules/synApps/support")
+epicsEnvSet("ASYN","/usr/local/epics/EPICS7/modules/synApps/support/asyn-R4-42")
+epicsEnvSet("MODBUS","/usr/local/epics/EPICS7/modules/synApps/support/modbus-R3-2")
+epicsEnvSet("AUTOSAVE","/usr/local/epics/EPICS7/modules/synApps/support/autosave-R5-10-2")
+epicsEnvSet("DEVIOCSTATS","/usr/local/epics/EPICS7/modules/synApps/support/iocStats-3-1-16")
+epicsEnvSet("EPICS_BASE","/usr/local/epics/EPICS7/base")

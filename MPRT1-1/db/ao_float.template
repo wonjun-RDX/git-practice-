@@ -1,0 +1,9 @@
+# Record template for motor float outputs
+record(ao, "$(P)$(R)") {
+    field(DTYP,"asynFloat64")
+    field(OUT,"@asyn($(PORT) $(OFFSET))$(DATA_TYPE)")
+    field(PREC,"$(PREC=0)") 
+}
+
+
+

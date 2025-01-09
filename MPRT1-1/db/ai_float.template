@@ -1,0 +1,9 @@
+# Record template for motor float inputs
+record(ai, "$(P)$(R)") {
+    field(DTYP,"asynFloat64")
+    field(INP,"@asyn($(PORT) $(OFFSET))$(DATA_TYPE)")
+    field(PREC,"$(PREC=0)")
+    field(SCAN,"$(SCAN=I/O Intr)")
+}
+
+
